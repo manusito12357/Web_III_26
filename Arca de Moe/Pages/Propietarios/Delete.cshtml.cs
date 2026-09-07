@@ -1,11 +1,19 @@
+using ArcadeMoe.Data;
 using ArcaDeMoe.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace ArcaDeMoe.Pages.Propietarios
 {
     public class DeleteModel : PageModel
     {
+        private readonly AppDbConext _context;
+
+        public DeleteModel(AppDbConext context)
+        {
+            _context = context;
+        }
         [BindProperty]
         public Propietario Propietario { get; set; } = new();
 
@@ -28,9 +36,15 @@ namespace ArcaDeMoe.Pages.Propietarios
             return Page();
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
-            // TODO: eliminar de base de datos
+            var propietario = await _context.Propietarios.FindAsync(Propietario.Id);
+            if (propietario != null)
+            {
+                _context.Propietarios.Remove(propietario);
+                await _context.SaveChangesAsync();
+            }
+
             return RedirectToPage("Index");
         }
     }

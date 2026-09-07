@@ -1,40 +1,49 @@
+using ArcadeMoe.Data;
 using ArcaDeMoe.Models;
-using ArcaDeMoe.Models.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System;
+using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace ArcaDeMoe.Pages.Citas
 {
     public class DeleteModel : PageModel
     {
-        [BindProperty]
-        public Cita Cita { get; set; } = new();
+        private readonly AppDbConext _context;
 
-        public IActionResult OnGet(int id)
+        public DeleteModel(AppDbConext context)
         {
-            // TODO: cargar desde base de datos por id
-            Cita = new Cita
-            {
-                Id = id,
-                MascotaId = 1,
-                Mascota = new Mascota { Id = 1, Nombre = "Firulais" },
-                VeterinarioId = 1,
-                Veterinario = new Veterinario { Id = 1, Nombre = "María", Apellidos = "Torres Paz" },
-                FechaHora = new DateTime(2026, 7, 10, 9, 0, 0),
-                Motivo = "Revisión general anual",
-                EstadoCita = EstadoCita.Pendiente
-            };
+            _context = context;
+        }
+
+        [BindProperty]
+        public Cita? Cita { get; set; } = new();
+
+        public async Task<IActionResult> OnGetAsync(int id)
+        {
+            Cita = await _context.Citas
+                .Include(c => c.Mascota)
+                .Include(c => c.Veterinario)
+                .FirstOrDefaultAsync(m => m.Id == id);
 
             if (Cita == null)
+            {
                 return NotFound();
+            }
 
             return Page();
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPostAsync(int id)
         {
-            // TODO: eliminar de base de datos
+            Cita = await _context.Citas.FindAsync(id);
+
+            if (Cita != null)
+            {
+                _context.Citas.Remove(Cita);
+                await _context.SaveChangesAsync();
+            }
+
             return RedirectToPage("Index");
         }
     }

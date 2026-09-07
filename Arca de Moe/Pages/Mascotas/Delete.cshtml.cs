@@ -1,3 +1,4 @@
+using ArcadeMoe.Data;
 using ArcaDeMoe.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -7,6 +8,12 @@ namespace ArcaDeMoe.Pages.Mascotas
 {
     public class DeleteModel : PageModel
     {
+        private readonly AppDbConext _context;
+
+        public DeleteModel(AppDbConext context)
+        {
+            _context = context;
+        }
         [BindProperty]
         public Mascota Mascota { get; set; } = new();
 
@@ -26,9 +33,15 @@ namespace ArcaDeMoe.Pages.Mascotas
             return Page();
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
-            // TODO: eliminar de base de datos
+            var mascota = await _context.Mascotas.FindAsync(Mascota.Id);
+            if (mascota != null)
+            {
+                _context.Mascotas.Remove(mascota);
+                await _context.SaveChangesAsync();
+            }
+
             return RedirectToPage("Index");
         }
     }

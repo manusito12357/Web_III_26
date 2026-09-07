@@ -1,3 +1,4 @@
+using ArcadeMoe.Data;
 using ArcaDeMoe.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -6,18 +7,23 @@ namespace ArcaDeMoe.Pages.Propietarios
 {
     public class CreateModel : PageModel
     {
+        private readonly AppDbConext _context;
+
+        public CreateModel(AppDbConext context)
+        {
+            _context = context;
+        }
         [BindProperty]
         public Propietario Propietario { get; set; } = new();
 
         public void OnGet() { }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
                 return Page();
 
-            // TODO: persistir en base de datos
-            // Por ahora solo redirige al índice
+            _context.Propietarios.Add(Propietario);
             return RedirectToPage("Index");
         }
     }

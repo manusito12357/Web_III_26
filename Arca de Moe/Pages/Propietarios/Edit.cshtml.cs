@@ -1,3 +1,4 @@
+using ArcadeMoe.Data;
 using ArcaDeMoe.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -6,6 +7,12 @@ namespace ArcaDeMoe.Pages.Propietarios
 {
     public class EditModel : PageModel
     {
+        private readonly AppDbConext _context;
+
+        public EditModel(AppDbConext context)
+        {
+            _context = context;
+        }
         [BindProperty]
         public Propietario Propietario { get; set; } = new();
 
@@ -29,12 +36,14 @@ namespace ArcaDeMoe.Pages.Propietarios
             return Page();
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
                 return Page();
 
-            // TODO: actualizar en base de datos
+            _context.Propietarios.Update(Propietario);
+            await _context.SaveChangesAsync();
+
             return RedirectToPage("Index");
         }
     }

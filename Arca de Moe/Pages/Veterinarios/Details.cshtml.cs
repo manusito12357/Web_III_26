@@ -10,16 +10,6 @@ namespace ArcaDeMoe.Pages.Veterinarios
 
         public IActionResult OnGet(int id)
         {
-            // TODO: cargar desde base de datos por id
-            Veterinario = new Veterinario
-            {
-                Id = id, Nombre = "María", Apellidos = "Torres Paz",
-                Especialidad = "General", Telefono = "555-3001", Estado = true
-            };
-
-            if (Veterinario == null)
-                return NotFound();
-
             return Page();
         }
     }

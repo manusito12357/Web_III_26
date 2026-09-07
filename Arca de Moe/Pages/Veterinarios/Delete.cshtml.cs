@@ -1,11 +1,19 @@
+using ArcadeMoe.Data;
 using ArcaDeMoe.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace ArcaDeMoe.Pages.Veterinarios
 {
     public class DeleteModel : PageModel
     {
+        private readonly AppDbConext _context;
+
+        public DeleteModel(AppDbConext context)
+        {
+            _context = context;
+        }
         [BindProperty]
         public Veterinario Veterinario { get; set; } = new();
 
@@ -24,9 +32,15 @@ namespace ArcaDeMoe.Pages.Veterinarios
             return Page();
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
-            // TODO: eliminar de base de datos
+            var veterinario = await _context.Veterinarios.FindAsync(Veterinario.Id);
+            if (veterinario != null)
+            {
+                _context.Veterinarios.Remove(veterinario);
+                await _context.SaveChangesAsync();
+            }
+
             return RedirectToPage("Index");
         }
     }

@@ -1,42 +1,45 @@
+using ArcadeMoe.Data;
 using ArcaDeMoe.Models;
 using ArcaDeMoe.Models.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ArcaDeMoe.Pages.Citas
 {
     public class EditModel : PageModel
     {
+        private readonly AppDbConext _context;
+
+        public EditModel(AppDbConext context)
+        {
+            _context = context;
+        }
+
         [BindProperty]
-        public Cita Cita { get; set; } = new();
+        public Cita? Cita { get; set; } = new();
 
         public List<SelectListItem> Mascotas { get; set; } = new();
         public List<SelectListItem> Veterinarios { get; set; } = new();
         public List<SelectListItem> EstadosCita { get; set; } = new();
 
-        public IActionResult OnGet(int id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            // TODO: cargar desde base de datos por id
-            Cita = new Cita
-            {
-                Id = id, MascotaId = 1, VeterinarioId = 1,
-                FechaHora = new DateTime(2026, 7, 10, 9, 0, 0),
-                Motivo = "Revisión general anual",
-                EstadoCita = EstadoCita.Pendiente,
-                Diagnostico = null
-            };
+            Cita = await _context.Citas.FindAsync(id);
 
             if (Cita == null)
+            {
                 return NotFound();
+            }
 
             CargarListasDesplegables();
             return Page();
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
@@ -44,7 +47,14 @@ namespace ArcaDeMoe.Pages.Citas
                 return Page();
             }
 
-            // TODO: actualizar en base de datos
+            if (Cita == null)
+            {
+                return BadRequest();
+            }
+
+            _context.Citas.Update(Cita);
+            await _context.SaveChangesAsync();
+
             return RedirectToPage("Index");
         }
 

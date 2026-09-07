@@ -1,16 +1,25 @@
+using ArcadeMoe.Data;
 using ArcaDeMoe.Models;
 using ArcaDeMoe.Models.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ArcaDeMoe.Pages.Citas
 {
     public class CreateModel : PageModel
     {
+        private readonly AppDbConext _context;
+
+        public CreateModel(AppDbConext context)
+        {
+            _context = context;
+        }
+
         [BindProperty]
-        public Cita Cita { get; set; } = new();
+        public Cita? Cita { get; set; } = new();
 
         public List<SelectListItem> Mascotas { get; set; } = new();
         public List<SelectListItem> Veterinarios { get; set; } = new();
@@ -21,7 +30,7 @@ namespace ArcaDeMoe.Pages.Citas
             CargarListasDesplegables();
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
@@ -29,13 +38,19 @@ namespace ArcaDeMoe.Pages.Citas
                 return Page();
             }
 
-            // TODO: persistir en base de datos
+            if (Cita == null)
+            {
+                return BadRequest();
+            }
+
+            _context.Citas.Add(Cita);
+            await _context.SaveChangesAsync();
+
             return RedirectToPage("Index");
         }
 
         private void CargarListasDesplegables()
         {
-            // TODO: cargar desde base de datos
             Mascotas = new List<SelectListItem>
             {
                 new SelectListItem { Value = "1", Text = "Firulais (Labrador)" },

@@ -10,19 +10,6 @@ namespace ArcaDeMoe.Pages.Propietarios
 
         public IActionResult OnGet(int id)
         {
-            // TODO: cargar desde base de datos por id
-            Propietario = new Propietario
-            {
-                Id = id,
-                Nombre = "Carlos",
-                Apellidos = "Ramírez López",
-                Telefono = "555-1234",
-                Email = "carlos@email.com",
-                Estado = true
-            };
-
-            if (Propietario == null)
-                return NotFound();
 
             return Page();
         }

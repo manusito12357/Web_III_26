@@ -1,3 +1,4 @@
+using ArcadeMoe.Data;
 using ArcaDeMoe.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -7,6 +8,12 @@ namespace ArcaDeMoe.Pages.Mascotas
 {
     public class EditModel : PageModel
     {
+        private readonly AppDbConext _context;
+
+        public EditModel(AppDbConext context)
+        {
+            _context = context;
+        }
         [BindProperty]
         public Mascota Mascota { get; set; } = new();
 
@@ -26,12 +33,14 @@ namespace ArcaDeMoe.Pages.Mascotas
             return Page();
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
                 return Page();
 
-            // TODO: actualizar en base de datos
+            _context.Mascotas.Update(Mascota);
+            await _context.SaveChangesAsync();
+
             return RedirectToPage("Index");
         }
     }
