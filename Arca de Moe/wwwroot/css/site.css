@@ -1,0 +1,307 @@
+:root {
+    --color-primary:    #4a90a4;
+    --color-primary-dk: #36717f;
+    --color-accent:     #f0a500;
+    --color-bg:         #f8f9fb;
+    --color-surface:    #ffffff;
+    --color-text:       #2c3e50;
+    --color-muted:      #6c757d;
+    --color-border:     #dee2e6;
+    --color-success:    #28a745;
+    --color-danger:     #dc3545;
+    --color-warning:    #ffc107;
+    --radius:           6px;
+    --shadow:           0 2px 8px rgba(0,0,0,.08);
+}
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- Navbar --- */
+.navbar-arcademoe {
+    background-color: var(--color-primary);
+    box-shadow: 0 2px 6px rgba(0,0,0,.15);
+    padding: .75rem 0;
+}
+
+.navbar-arcademoe .navbar-brand {
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: .4px;
+    color: #fff;
+}
+
+.navbar-arcademoe .nav-link {
+    color: rgba(255,255,255,.88) !important;
+    font-weight: 500;
+    padding: .4rem .85rem;
+    border-radius: var(--radius);
+    transition: background .2s;
+}
+
+.navbar-arcademoe .nav-link:hover,
+.navbar-arcademoe .nav-link:focus {
+    background-color: rgba(255,255,255,.18);
+    color: #fff !important;
+}
+
+/* --- Contenedor principal --- */
+.page-wrapper {
+    flex: 1;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+/* --- Footer --- */
+.footer-arcademoe {
+    background-color: var(--color-primary);
+    color: rgba(255,255,255,.8);
+    padding: .8rem 0;
+    font-size: .85rem;
+    margin-top: auto;
+}
+
+/* --- Page header (título + botón) --- */
+.page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    padding-bottom: .75rem;
+    border-bottom: 2px solid var(--color-border);
+}
+
+.page-header h1 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--color-primary-dk);
+    margin: 0;
+}
+
+/* --- Tarjeta contenedora --- */
+.card-section {
+    background: var(--color-surface);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 1.5rem;
+}
+
+/* --- Tablas --- */
+.table-arcademoe {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .93rem;
+}
+
+.table-arcademoe thead th {
+    background-color: var(--color-primary);
+    color: #fff;
+    padding: .65rem 1rem;
+    text-align: left;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.table-arcademoe tbody tr {
+    border-bottom: 1px solid var(--color-border);
+    transition: background .15s;
+}
+
+.table-arcademoe tbody tr:hover {
+    background-color: #eaf4f7;
+}
+
+.table-arcademoe td {
+    padding: .6rem 1rem;
+    vertical-align: middle;
+}
+
+/* --- Badges de estado --- */
+.badge-activo   { background: var(--color-success); color: #fff; }
+.badge-inactivo { background: var(--color-muted);   color: #fff; }
+.badge-pendiente   { background: var(--color-warning); color: #212529; }
+.badge-completada  { background: var(--color-success); color: #fff; }
+.badge-cancelada   { background: var(--color-danger);  color: #fff; }
+
+.estado-badge {
+    display: inline-block;
+    padding: .2rem .6rem;
+    border-radius: 20px;
+    font-size: .78rem;
+    font-weight: 600;
+}
+
+/* --- Botones --- */
+.btn-primary-am {
+    background-color: var(--color-primary);
+    color: #fff;
+    border: none;
+    padding: .45rem 1rem;
+    border-radius: var(--radius);
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background .2s;
+    display: inline-block;
+}
+
+.btn-primary-am:hover { background-color: var(--color-primary-dk); color: #fff; }
+
+.btn-sm-am {
+    padding: .25rem .65rem;
+    font-size: .82rem;
+    border-radius: var(--radius);
+    text-decoration: none;
+    font-weight: 500;
+    display: inline-block;
+    transition: opacity .15s;
+}
+
+.btn-sm-am:hover { opacity: .85; }
+
+.btn-details  { background: #17a2b8; color: #fff; }
+.btn-edit     { background: var(--color-accent); color: #212529; }
+.btn-delete   { background: var(--color-danger); color: #fff; }
+.btn-back     { background: var(--color-muted); color: #fff; }
+
+/* --- Formularios --- */
+.form-section {
+    max-width: 640px;
+}
+
+.form-group-am {
+    margin-bottom: 1.1rem;
+}
+
+.form-group-am label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: .35rem;
+    color: var(--color-text);
+    font-size: .92rem;
+}
+
+.form-group-am input,
+.form-group-am select,
+.form-group-am textarea {
+    width: 100%;
+    padding: .45rem .75rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    font-size: .93rem;
+    color: var(--color-text);
+    background: var(--color-surface);
+    transition: border-color .2s, box-shadow .2s;
+}
+
+.form-group-am input:focus,
+.form-group-am select:focus,
+.form-group-am textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(74,144,164,.2);
+}
+
+.form-group-am .text-danger {
+    font-size: .82rem;
+    margin-top: .25rem;
+    display: block;
+}
+
+.form-check-am {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    margin-bottom: 1.1rem;
+}
+
+.form-check-am input[type="checkbox"] {
+    width: 1.1rem;
+    height: 1.1rem;
+    cursor: pointer;
+}
+
+.form-actions {
+    display: flex;
+    gap: .75rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+}
+
+/* --- Detail card --- */
+.detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem 2rem;
+}
+
+.detail-item label {
+    font-weight: 700;
+    font-size: .82rem;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    color: var(--color-muted);
+    display: block;
+    margin-bottom: .2rem;
+}
+
+.detail-item span {
+    font-size: .95rem;
+    color: var(--color-text);
+}
+
+/* --- Confirm delete card --- */
+.delete-box {
+    background: #fff5f5;
+    border: 1px solid #f5c2c2;
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    max-width: 520px;
+}
+
+.delete-box p {
+    color: #721c24;
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+/* --- Alertas de validación --- */
+.validation-summary-errors {
+    background: #fff3cd;
+    border: 1px solid #ffc107;
+    border-radius: var(--radius);
+    padding: .75rem 1rem;
+    margin-bottom: 1rem;
+    font-size: .9rem;
+    color: #856404;
+}
+
+/* --- Responsive tabla horizontal --- */
+.table-responsive-am {
+    overflow-x: auto;
+}
+
+@media (max-width: 768px) {
+    .detail-grid { grid-template-columns: 1fr; }
+    .page-header { flex-direction: column; align-items: flex-start; gap: .75rem; }
+}
+.navbar-logo {
+    height: 40px;
+    width: auto;
+    object-fit: contain;
+    margin-right: 8px;
+    border-radius: 4px; /* opcional, para que no se vea el fondo blanco cuadrado tan brusco */
+}

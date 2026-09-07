@@ -1,0 +1,13 @@
+/* mascotas.css — Estilos específicos para la sección Mascotas */
+
+.mascotas-icon::before {
+    content: "🐶 ";
+}
+
+.col-especie {
+    min-width: 100px;
+}
+
+.col-raza {
+    min-width: 120px;
+}

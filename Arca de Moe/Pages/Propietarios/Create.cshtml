@@ -1,0 +1,57 @@
+@page
+@model ArcaDeMoe.Pages.Propietarios.CreateModel
+@{
+    ViewData["Title"] = "Nuevo propietario";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/propietarios.css" asp-append-version="true" />
+}
+
+<div class="page-header">
+    <h1 class="propietarios-icon">Nuevo propietario</h1>
+</div>
+
+<div class="card-section">
+    <form method="post" class="form-section">
+        <div asp-validation-summary="ModelOnly" class="validation-summary-errors"></div>
+
+        <div class="form-group-am">
+            <label asp-for="Propietario.Nombre"></label>
+            <input asp-for="Propietario.Nombre" placeholder="Ej: Carlos" />
+            <span asp-validation-for="Propietario.Nombre" class="text-danger"></span>
+        </div>
+
+        <div class="form-group-am">
+            <label asp-for="Propietario.Apellidos"></label>
+            <input asp-for="Propietario.Apellidos" placeholder="Ej: Ramírez López" />
+            <span asp-validation-for="Propietario.Apellidos" class="text-danger"></span>
+        </div>
+
+        <div class="form-group-am">
+            <label asp-for="Propietario.Telefono"></label>
+            <input asp-for="Propietario.Telefono" placeholder="Ej: 555-1234" />
+            <span asp-validation-for="Propietario.Telefono" class="text-danger"></span>
+        </div>
+
+        <div class="form-group-am">
+            <label asp-for="Propietario.Email"></label>
+            <input asp-for="Propietario.Email" type="email" placeholder="Ej: carlos@email.com" />
+            <span asp-validation-for="Propietario.Email" class="text-danger"></span>
+        </div>
+
+        <div class="form-check-am">
+            <input asp-for="Propietario.Estado" type="checkbox" />
+            <label asp-for="Propietario.Estado">Activo</label>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn-primary-am">Guardar</button>
+            <a asp-page="Index" class="btn-sm-am btn-back">Cancelar</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,9 @@
+/* veterinarios.css — Estilos específicos para la sección Veterinarios */
+
+.veterinarios-icon::before {
+    content: "🩺 ";
+}
+
+.col-especialidad {
+    min-width: 140px;
+}

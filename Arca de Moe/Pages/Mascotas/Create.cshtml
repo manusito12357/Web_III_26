@@ -1,0 +1,63 @@
+@page
+@model ArcaDeMoe.Pages.Mascotas.CreateModel
+@{
+    ViewData["Title"] = "Nueva mascota";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/mascotas.css" asp-append-version="true" />
+}
+
+<div class="page-header">
+    <h1 class="mascotas-icon">Nueva mascota</h1>
+</div>
+
+<div class="card-section">
+    <form method="post" class="form-section">
+        <div asp-validation-summary="ModelOnly" class="validation-summary-errors"></div>
+
+        <div class="form-group-am">
+            <label asp-for="Mascota.PropietarioId"></label>
+            <input asp-for="Mascota.PropietarioId" type="number" min="1" placeholder="ID del propietario" />
+            <span asp-validation-for="Mascota.PropietarioId" class="text-danger"></span>
+        </div>
+
+        <div class="form-group-am">
+            <label asp-for="Mascota.Nombre"></label>
+            <input asp-for="Mascota.Nombre" placeholder="Ej: Firulais" />
+            <span asp-validation-for="Mascota.Nombre" class="text-danger"></span>
+        </div>
+
+        <div class="form-group-am">
+            <label asp-for="Mascota.Especie"></label>
+            <input asp-for="Mascota.Especie" placeholder="Ej: Perro, Gato, Ave..." />
+            <span asp-validation-for="Mascota.Especie" class="text-danger"></span>
+        </div>
+
+        <div class="form-group-am">
+            <label asp-for="Mascota.Raza"></label>
+            <input asp-for="Mascota.Raza" placeholder="Ej: Labrador" />
+            <span asp-validation-for="Mascota.Raza" class="text-danger"></span>
+        </div>
+
+        <div class="form-group-am">
+            <label asp-for="Mascota.FechaNacimiento"></label>
+            <input asp-for="Mascota.FechaNacimiento" type="date" />
+            <span asp-validation-for="Mascota.FechaNacimiento" class="text-danger"></span>
+        </div>
+
+        <div class="form-check-am">
+            <input asp-for="Mascota.Estado" type="checkbox" />
+            <label asp-for="Mascota.Estado">Activo</label>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn-primary-am">Guardar</button>
+            <a asp-page="Index" class="btn-sm-am btn-back">Cancelar</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

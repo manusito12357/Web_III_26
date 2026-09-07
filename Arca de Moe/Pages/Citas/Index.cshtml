@@ -1,0 +1,62 @@
+@page
+@model ArcaDeMoe.Pages.Citas.IndexModel
+@using ArcaDeMoe.Models.Enums
+@{
+    ViewData["Title"] = "Citas";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/citas.css" asp-append-version="true" />
+}
+
+<div class="page-header">
+    <h1>Citas</h1>
+    <a asp-page="Create" class="btn-primary-am">+ Nueva cita</a>
+</div>
+
+<div class="card-section">
+    <div class="table-responsive-am">
+        <table class="table-arcademoe">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Mascota</th>
+                    <th>Veterinario</th>
+                    <th class="col-fecha">Fecha y hora</th>
+                    <th class="col-motivo">Motivo</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var c in Model.Citas)
+                {
+                    <tr>
+                        <td>@c.Id</td>
+                        <td>@(c.Mascota?.Nombre ?? c.MascotaId.ToString())</td>
+                        <td>@(c.Veterinario != null ? $"{c.Veterinario.Nombre} {c.Veterinario.Apellidos}" : c.VeterinarioId.ToString())</td>
+                        <td>@c.FechaHora.ToString("dd/MM/yyyy HH:mm")</td>
+                        <td title="@c.Motivo" class="col-motivo">@c.Motivo</td>
+                        <td>
+                            @{
+                                var badgeClass = c.EstadoCita switch
+                                {
+                                    EstadoCita.Pendiente   => "badge-pendiente",
+                                    EstadoCita.Completada  => "badge-completada",
+                                    EstadoCita.Cancelada   => "badge-cancelada",
+                                    _                      => ""
+                                };
+                            }
+                            <span class="estado-badge @badgeClass">@c.EstadoCita</span>
+                        </td>
+                        <td>
+                            <a asp-page="Details" asp-route-id="@c.Id" class="btn-sm-am btn-details">Ver</a>
+                            <a asp-page="Edit"    asp-route-id="@c.Id" class="btn-sm-am btn-edit">Editar</a>
+                            <a asp-page="Delete"  asp-route-id="@c.Id" class="btn-sm-am btn-delete">Eliminar</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,69 @@
+@page "{id:int}"
+@model ArcaDeMoe.Pages.Citas.EditModel
+@{
+    ViewData["Title"] = "Editar cita";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/citas.css" asp-append-version="true" />
+}
+
+<div class="page-header">
+    <h1 class="citas-icon">Editar cita</h1>
+</div>
+
+<div class="card-section">
+    <form method="post" class="form-section">
+        <input type="hidden" asp-for="Cita.Id" />
+        <div asp-validation-summary="ModelOnly" class="validation-summary-errors"></div>
+
+        <div class="form-group-am">
+            <label asp-for="Cita.MascotaId"></label>
+            <select asp-for="Cita.MascotaId" asp-items="Model.Mascotas">
+                <option value="">-- Seleccionar mascota --</option>
+            </select>
+            <span asp-validation-for="Cita.MascotaId" class="text-danger"></span>
+        </div>
+
+        <div class="form-group-am">
+            <label asp-for="Cita.VeterinarioId"></label>
+            <select asp-for="Cita.VeterinarioId" asp-items="Model.Veterinarios">
+                <option value="">-- Seleccionar veterinario --</option>
+            </select>
+            <span asp-validation-for="Cita.VeterinarioId" class="text-danger"></span>
+        </div>
+
+        <div class="form-group-am">
+            <label asp-for="Cita.FechaHora"></label>
+            <input asp-for="Cita.FechaHora" type="datetime-local" />
+            <span asp-validation-for="Cita.FechaHora" class="text-danger"></span>
+        </div>
+
+        <div class="form-group-am">
+            <label asp-for="Cita.Motivo"></label>
+            <textarea asp-for="Cita.Motivo" rows="3"></textarea>
+            <span asp-validation-for="Cita.Motivo" class="text-danger"></span>
+        </div>
+
+        <div class="form-group-am">
+            <label asp-for="Cita.EstadoCita"></label>
+            <select asp-for="Cita.EstadoCita" asp-items="Model.EstadosCita"></select>
+            <span asp-validation-for="Cita.EstadoCita" class="text-danger"></span>
+        </div>
+
+        <div class="form-group-am">
+            <label asp-for="Cita.Diagnostico"></label>
+            <textarea asp-for="Cita.Diagnostico" rows="3" placeholder="(Opcional)"></textarea>
+            <span asp-validation-for="Cita.Diagnostico" class="text-danger"></span>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn-primary-am">Guardar cambios</button>
+            <a asp-page="Index" class="btn-sm-am btn-back">Cancelar</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

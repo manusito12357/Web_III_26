@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Arca de Moe</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-md navbar-dark navbar-arcademoe">
+            <div class="container">
+                <img src="~/js/xdaa.png" alt="Arca de Moe" class="navbar-logo" />
+                <a class="navbar-brand" asp-page="/Index">
+                    Arca de Moe
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarMain" aria-controls="navbarMain"
+                        aria-expanded="false" aria-label="Abrir menú">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarMain">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-page="/Propietarios/Index">Propietarios</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-page="/Mascotas/Index">Mascotas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-page="/Veterinarios/Index">Veterinarios</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-page="/Citas/Index">Citas</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container page-wrapper">
+        <main role="main" class="pb-4">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="footer-arcademoe">
+        
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
