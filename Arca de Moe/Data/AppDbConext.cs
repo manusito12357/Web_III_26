@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using ArcaDeMoe.Models;
 namespace ArcadeMoe.Data
 {
-    public class AppDbConext : DbContext
+    public class AppDbConext : IdentityDbContext
     {
         public AppDbConext(DbContextOptions<AppDbConext> options) : base(options)
         {
