@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using ArcaDeMoe.Models;
 namespace ArcadeMoe.Data
 {
-    public class AppDbConext : IdentityDbContext
+    public class AppDbConext : IdentityDbContext<ApplicationUser>
     {
         public AppDbConext(DbContextOptions<AppDbConext> options) : base(options)
         {
