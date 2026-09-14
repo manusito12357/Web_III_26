@@ -1,0 +1,38 @@
+@page "{id:int}"
+@model ArcaDeMoe.Pages.Propietarios.DeleteModel
+@{
+    ViewData["Title"] = "Eliminar propietario";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/propietarios.css" asp-append-version="true" />
+}
+
+<div class="page-header">
+    <h1 class="propietarios-icon">Eliminar propietario</h1>
+</div>
+
+<div class="card-section">
+    <div class="delete-box">
+        <p>¿Estás seguro de que deseas eliminar al siguiente propietario? Esta acción no se puede deshacer.</p>
+
+        <div class="detail-grid" style="margin-bottom:1.25rem">
+            <div class="detail-item">
+                <label>Nombre</label>
+                <span>@Model.Propietario.Nombre @Model.Propietario.Apellidos</span>
+            </div>
+            <div class="detail-item">
+                <label>Correo electrónico</label>
+                <span>@Model.Propietario.Email</span>
+            </div>
+        </div>
+
+        <form method="post">
+            <input type="hidden" asp-for="Propietario.Id" />
+            <div class="form-actions">
+                <button type="submit" class="btn-sm-am btn-delete">Sí, eliminar</button>
+                <a asp-page="Index" class="btn-sm-am btn-back">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>

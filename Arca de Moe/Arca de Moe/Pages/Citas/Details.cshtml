@@ -1,0 +1,63 @@
+@page "{id:int}"
+@model ArcaDeMoe.Pages.Citas.DetailsModel
+@using ArcaDeMoe.Models.Enums
+@{
+    ViewData["Title"] = "Detalle de la cita";
+    var badgeClass = Model.Cita.EstadoCita switch
+    {
+        EstadoCita.Pendiente   => "badge-pendiente",
+        EstadoCita.Completada  => "badge-completada",
+        EstadoCita.Cancelada   => "badge-cancelada",
+        _                      => ""
+    };
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/citas.css" asp-append-version="true" />
+}
+
+<div class="page-header">
+    <h1 class="citas-icon">Detalle de la cita</h1>
+    <a asp-page="Index" class="btn-sm-am btn-back">← Volver</a>
+</div>
+
+<div class="card-section">
+    <div class="detail-grid">
+        <div class="detail-item">
+            <label>Mascota</label>
+            <span>@(Model.Cita.Mascota?.Nombre ?? Model.Cita.MascotaId.ToString())</span>
+        </div>
+        <div class="detail-item">
+            <label>Veterinario</label>
+            <span>
+                @(Model.Cita.Veterinario != null
+                    ? $"{Model.Cita.Veterinario.Nombre} {Model.Cita.Veterinario.Apellidos}"
+                    : Model.Cita.VeterinarioId.ToString())
+            </span>
+        </div>
+        <div class="detail-item">
+            <label>Fecha y hora</label>
+            <span>@Model.Cita.FechaHora.ToString("dd/MM/yyyy HH:mm")</span>
+        </div>
+        <div class="detail-item">
+            <label>Estado</label>
+            <span><span class="estado-badge @badgeClass">@Model.Cita.EstadoCita</span></span>
+        </div>
+        <div class="detail-item" style="grid-column: 1 / -1">
+            <label>Motivo</label>
+            <span>@Model.Cita.Motivo</span>
+        </div>
+        @if (!string.IsNullOrWhiteSpace(Model.Cita.Diagnostico))
+        {
+            <div class="detail-item" style="grid-column: 1 / -1">
+                <label>Diagnóstico</label>
+                <span>@Model.Cita.Diagnostico</span>
+            </div>
+        }
+    </div>
+
+    <div class="form-actions" style="margin-top:1.5rem">
+        <a asp-page="Edit" asp-route-id="@Model.Cita.Id" class="btn-sm-am btn-edit">Editar</a>
+        <a asp-page="Delete" asp-route-id="@Model.Cita.Id" class="btn-sm-am btn-delete">Eliminar</a>
+    </div>
+</div>

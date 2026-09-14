@@ -1,0 +1,53 @@
+@page "{id:int}"
+@model ArcaDeMoe.Pages.Veterinarios.DetailsModel
+@{
+    ViewData["Title"] = "Detalle del veterinario";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/veterinarios.css" asp-append-version="true" />
+}
+
+<div class="page-header">
+    <h1 class="veterinarios-icon">Detalle del veterinario</h1>
+    <a asp-page="Index" class="btn-sm-am btn-back">← Volver</a>
+</div>
+
+<div class="card-section">
+    <div class="detail-grid">
+        <div class="detail-item">
+            <label>Nombre</label>
+            <span>@Model.Veterinario.Nombre</span>
+        </div>
+        <div class="detail-item">
+            <label>Apellidos</label>
+            <span>@Model.Veterinario.Apellidos</span>
+        </div>
+        <div class="detail-item">
+            <label>Especialidad</label>
+            <span>@Model.Veterinario.Especialidad</span>
+        </div>
+        <div class="detail-item">
+            <label>Teléfono</label>
+            <span>@Model.Veterinario.Telefono</span>
+        </div>
+        <div class="detail-item">
+            <label>Estado</label>
+            <span>
+                @if (Model.Veterinario.Estado)
+                {
+                    <span class="estado-badge badge-activo">Activo</span>
+                }
+                else
+                {
+                    <span class="estado-badge badge-inactivo">Inactivo</span>
+                }
+            </span>
+        </div>
+    </div>
+
+    <div class="form-actions" style="margin-top:1.5rem">
+        <a asp-page="Edit" asp-route-id="@Model.Veterinario.Id" class="btn-sm-am btn-edit">Editar</a>
+        <a asp-page="Delete" asp-route-id="@Model.Veterinario.Id" class="btn-sm-am btn-delete">Eliminar</a>
+    </div>
+</div>

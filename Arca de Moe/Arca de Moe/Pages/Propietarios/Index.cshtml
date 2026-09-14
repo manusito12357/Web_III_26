@@ -1,0 +1,59 @@
+@page
+@model ArcaDeMoe.Pages.Propietarios.IndexModel
+@{
+    ViewData["Title"] = "Propietarios";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/propietarios.css" asp-append-version="true" />
+}
+
+<div class="page-header">
+    <h1>Propietarios</h1>
+    <a asp-page="Create" class="btn-primary-am">+ Nuevo propietario</a>
+</div>
+
+<div class="card-section">
+    <div class="table-responsive-am">
+        <table class="table-arcademoe">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Nombre</th>
+                    <th>Apellidos</th>
+                    <th>Teléfono</th>
+                    <th class="col-email">Correo electrónico</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var p in Model.Propietarios)
+                {
+                    <tr>
+                        <td>@p.Id</td>
+                        <td>@p.Nombre</td>
+                        <td>@p.Apellidos</td>
+                        <td>@p.Telefono</td>
+                        <td>@p.Email</td>
+                        <td>
+                            @if (p.Estado)
+                            {
+                                <span class="estado-badge badge-activo">Activo</span>
+                            }
+                            else
+                            {
+                                <span class="estado-badge badge-inactivo">Inactivo</span>
+                            }
+                        </td>
+                        <td>
+                            <a asp-page="Details" asp-route-id="@p.Id" class="btn-sm-am btn-details">Ver</a>
+                            <a asp-page="Edit"    asp-route-id="@p.Id" class="btn-sm-am btn-edit">Editar</a>
+                            <a asp-page="Delete"  asp-route-id="@p.Id" class="btn-sm-am btn-delete">Eliminar</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

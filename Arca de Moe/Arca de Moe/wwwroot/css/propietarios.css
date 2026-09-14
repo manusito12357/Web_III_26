@@ -1,0 +1,18 @@
+/* propietarios.css — Estilos específicos para la sección Propietarios */
+
+.propietarios-icon::before {
+    content: "👤 ";
+}
+
+.table-arcademoe thead th:first-child {
+    border-radius: 6px 0 0 0;
+}
+
+.table-arcademoe thead th:last-child {
+    border-radius: 0 6px 0 0;
+}
+
+/* Columna email: no truncar en pantallas medianas */
+.col-email {
+    min-width: 180px;
+}

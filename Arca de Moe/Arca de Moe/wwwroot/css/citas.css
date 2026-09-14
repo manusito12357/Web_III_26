@@ -1,0 +1,17 @@
+/* citas.css — Estilos específicos para la sección Citas */
+
+.citas-icon::before {
+    content: "📅 ";
+}
+
+.col-fecha {
+    min-width: 150px;
+    white-space: nowrap;
+}
+
+.col-motivo {
+    max-width: 250px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

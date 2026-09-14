@@ -1,0 +1,51 @@
+@page "{id:int}"
+@model ArcaDeMoe.Pages.Citas.DeleteModel
+@using ArcaDeMoe.Models.Enums
+@{
+    ViewData["Title"] = "Eliminar cita";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/citas.css" asp-append-version="true" />
+}
+
+<div class="page-header">
+    <h1 class="citas-icon">Eliminar cita</h1>
+</div>
+
+<div class="card-section">
+    <div class="delete-box">
+        <p>¿Estás seguro de que deseas eliminar esta cita? Esta acción no se puede deshacer.</p>
+
+        <div class="detail-grid" style="margin-bottom:1.25rem">
+            <div class="detail-item">
+                <label>Mascota</label>
+                <span>@(Model.Cita.Mascota?.Nombre ?? Model.Cita.MascotaId.ToString())</span>
+            </div>
+            <div class="detail-item">
+                <label>Veterinario</label>
+                <span>
+                    @(Model.Cita.Veterinario != null
+                        ? $"{Model.Cita.Veterinario.Nombre} {Model.Cita.Veterinario.Apellidos}"
+                        : Model.Cita.VeterinarioId.ToString())
+                </span>
+            </div>
+            <div class="detail-item">
+                <label>Fecha y hora</label>
+                <span>@Model.Cita.FechaHora.ToString("dd/MM/yyyy HH:mm")</span>
+            </div>
+            <div class="detail-item">
+                <label>Motivo</label>
+                <span>@Model.Cita.Motivo</span>
+            </div>
+        </div>
+
+        <form method="post">
+            <input type="hidden" asp-for="Cita.Id" />
+            <div class="form-actions">
+                <button type="submit" class="btn-sm-am btn-delete">Sí, eliminar</button>
+                <a asp-page="Index" class="btn-sm-am btn-back">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
