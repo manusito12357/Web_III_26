@@ -5,8 +5,19 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.UI.Services;
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("Administrador", policy => policy.RequireRole("Administrador"));
+    options.AddPolicy("Veterinario", policy => policy.RequireRole("Veterinario"));
+});
 // Add services to the container.
-builder.Services.AddRazorPages();
+builder.Services.AddRazorPages(options =>
+{
+    options.Conventions.AuthorizeFolder("/Veterinarios", "Administrador"); 
+    options.Conventions.AuthorizeFolder("/Propietarios", "Administrador");
+    options.Conventions.AuthorizeFolder("/Citas"); 
+    options.Conventions.AuthorizeFolder("/Mascotas");
+});
 
 builder.Services.AddDbContext<AppDbConext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -15,6 +26,12 @@ builder.Services.AddDbContext<AppDbConext>(options =>
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<AppDbConext>()
     .AddDefaultTokenProviders();
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Identity/Account/Login";
+    options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+});
 
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 

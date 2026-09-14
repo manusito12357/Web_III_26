@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@using ArcaDeMoe.Models
+@inject SignInManager<ApplicationUser> SignInManager
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="utf-8" />
@@ -36,6 +39,39 @@
                             <a class="nav-link" asp-page="/Citas/Index">Citas</a>
                         </li>
                     </ul>
+
+                    <ul class="navbar-nav">
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item">
+                                <span class="nav-link">
+                                    @User.Identity!.Name
+                                    @if (User.IsInRole("Administrador"))
+                                    {
+                                        <strong>(Admin)</strong>
+                                    }
+                                    else if (User.IsInRole("Veterinario"))
+                                    {
+                                        <strong>(Veterinario)</strong>
+                                    }
+                                </span>
+                            </li>
+                            <li class="nav-item">
+                                <form method="post" asp-area="Identity" asp-page="/Account/Logout">
+                                    <button type="submit" class="nav-link btn btn-link">Cerrar sesión</button>
+                                </form>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="Identity" asp-page="/Account/Register">Registrarse</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="Identity" asp-page="/Account/Login">Iniciar sesión</a>
+                            </li>
+                        }
+                    </ul>
                 </div>
             </div>
         </nav>
@@ -48,7 +84,6 @@
     </div>
 
     <footer class="footer-arcademoe">
-        
     </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
