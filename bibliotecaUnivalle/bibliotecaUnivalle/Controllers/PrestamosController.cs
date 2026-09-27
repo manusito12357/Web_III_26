@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using bibliotecaUnivalle.Data;
@@ -10,6 +12,7 @@ using bibliotecaUnivalle.Models;
 
 namespace bibliotecaUnivalle.Controllers
 {
+    [Authorize]
     public class PrestamosController : Controller
     {
         private readonly AppDbContext _context;
@@ -22,6 +25,16 @@ namespace bibliotecaUnivalle.Controllers
         // GET: Prestamos
         public async Task<IActionResult> Index()
         {
+            if (User.IsInRole("Usuario"))
+            {
+                int usuarioId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+                var misPrestamos = _context.Prestamos
+                    .Include(p => p.Libro)
+                    .Include(p => p.Usuario)
+                    .Where(p => p.UsuarioId == usuarioId);
+                return View(await misPrestamos.ToListAsync());
+            }
+
             var appDbContext = _context.Prestamos.Include(p => p.Libro).Include(p => p.Usuario);
             return View(await appDbContext.ToListAsync());
         }
@@ -50,7 +63,7 @@ namespace bibliotecaUnivalle.Controllers
         public IActionResult Create()
         {
             ViewData["LibroId"] = new SelectList(_context.Libros, "Id", "Autor");
-            ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "Id", "ApellidoMaterno");
+            ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "Id", "Nombre");
             return View();
         }
 

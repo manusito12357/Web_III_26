@@ -1,15 +1,17 @@
+using bibliotecaUnivalle.Data;
+using bibliotecaUnivalle.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using bibliotecaUnivalle.Data;
-using bibliotecaUnivalle.Models;
 
 namespace bibliotecaUnivalle.Controllers
 {
+    [Authorize(Roles = "Administrador,Bibliotecario")]
     public class LibrosController : Controller
     {
         private readonly AppDbContext _context;

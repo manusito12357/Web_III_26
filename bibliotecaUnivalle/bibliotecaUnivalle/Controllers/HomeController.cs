@@ -1,4 +1,5 @@
 using bibliotecaUnivalle.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -17,7 +18,13 @@ namespace bibliotecaUnivalle.Controllers
         {
             return View();
         }
-
+        [Authorize]
+        public IActionResult Dashboard()
+        {
+            if (User.IsInRole("Administrador")) return View("DashboardAdmin");
+            if (User.IsInRole("Bibliotecario")) return View("DashboardBibliotecario");
+            return View("DashboardUsuario");
+        }
         public IActionResult Privacy()
         {
             return View();
