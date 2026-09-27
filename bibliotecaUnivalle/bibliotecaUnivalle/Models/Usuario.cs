@@ -59,6 +59,10 @@ namespace bibliotecaUnivalle.Models
         [Display(Name = "Dirección")]
         public string Direccion { get; set; }
 
+
+        [Required(ErrorMessage = "El campo rol es obligatorio")]
+        [Display(Name = "Rol")]
+        public RolUsuario Rol { get; set; }
         public ICollection<Prestamo> Prestamos { get; set; }
     }
 }

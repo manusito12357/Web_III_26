@@ -38,7 +38,9 @@ namespace bibliotecaUnivalle.Controllers
             {
                 new Claim(ClaimTypes.NameIdentifier, usuario.Id.ToString()),
                 new Claim(ClaimTypes.Name, usuario.Nombre),
-                new Claim(ClaimTypes.Role, usuario.TipoUsuario.ToString())
+                // Guardamos el correo en ClaimTypes.Email para mostrarlo en el layout
+                new Claim(ClaimTypes.Email, usuario.Correo ?? string.Empty),
+                new Claim(ClaimTypes.Role, usuario.Rol.ToString())
             };
 
             var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -47,15 +49,17 @@ namespace bibliotecaUnivalle.Controllers
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
             // Redirige según el rol
-            return usuario.TipoUsuario switch
+            return usuario.Rol switch
             {
-                Models.TipoUsuario.Administrador => RedirectToAction("Dashboard", "Home"),
-                Models.TipoUsuario.Bibliotecario => RedirectToAction("Dashboard", "Home"),
-                Models.TipoUsuario.Usuario => RedirectToAction("Dashboard", "Home"),
+                Models.RolUsuario.Administrador => RedirectToAction("Dashboard", "Home"),
+                Models.RolUsuario.Bibliotecario => RedirectToAction("Dashboard", "Home"),
+                Models.RolUsuario.Usuario => RedirectToAction("Dashboard", "Home"),
                 _ => RedirectToAction("Login")
             };
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);

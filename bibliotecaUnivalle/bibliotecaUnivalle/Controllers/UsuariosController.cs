@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,14 +12,16 @@ using System.Threading.Tasks;
 
 namespace bibliotecaUnivalle.Controllers
 {
-    [Authorize(Roles = "Administrador")]
+    //[Authorize(Roles = "Administrador")]
     public class UsuariosController : Controller
     {
         private readonly AppDbContext _context;
+        private readonly ILogger<UsuariosController> _logger;
 
-        public UsuariosController(AppDbContext context)
+        public UsuariosController(AppDbContext context, ILogger<UsuariosController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         // GET: Usuarios
@@ -52,17 +55,27 @@ namespace bibliotecaUnivalle.Controllers
         }
 
         // POST: Usuarios/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ci,Nombre,ApellidoMaterno,ApellidoPaterno,Correo,Password,Telefono,Direccion")] Usuario usuario)
+        public async Task<IActionResult> Create([Bind("Id,ci,Nombre,ApellidoMaterno,ApellidoPaterno,Correo,Password,Telefono,Direccion,Rol")] Usuario usuario)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(usuario);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                // Log de cada error con su campo para diagnosticar fallas de validacion
+                foreach (var kvp in ModelState)
+                {
+                    foreach (var error in kvp.Value.Errors)
+                    {
+                        _logger.LogWarning("[VALIDACION] Campo: {Campo} => {Mensaje}", kvp.Key, error.ErrorMessage);
+                        Console.WriteLine($"[VALIDACION] Campo: {kvp.Key} => {error.ErrorMessage}");
+                    }
+                }
             }
             return View(usuario);
         }
@@ -84,11 +97,9 @@ namespace bibliotecaUnivalle.Controllers
         }
 
         // POST: Usuarios/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ci,Nombre,ApellidoMaterno,ApellidoPaterno,Correo,Password,Telefono,Direccion")] Usuario usuario)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,ci,Nombre,ApellidoMaterno,ApellidoPaterno,Correo,Password,Telefono,Direccion,Rol")] Usuario usuario)
         {
             if (id != usuario.Id)
             {
