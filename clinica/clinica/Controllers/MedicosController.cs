@@ -5,27 +5,27 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using wa_registroestudiantes.Data;
-using wa_registroestudiantes.Models;
+using clinica.Data;
+using clinica.Models;
 
-namespace wa_registroestudiantes.Controllers
+namespace clinica.Controllers
 {
-    public class EstudiantesController : Controller
+    public class MedicosController : Controller
     {
         private readonly AppDbContext _context;
 
-        public EstudiantesController(AppDbContext context)
+        public MedicosController(AppDbContext context)
         {
             _context = context;
         }
 
-        // GET: Estudiantes
+        // GET: Medicos
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Estudiantes.ToListAsync());
+            return View(await _context.Medicos.ToListAsync());
         }
 
-        // GET: Estudiantes/Details/5
+        // GET: Medicos/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace wa_registroestudiantes.Controllers
                 return NotFound();
             }
 
-            var estudiante = await _context.Estudiantes
+            var medico = await _context.Medicos
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (estudiante == null)
+            if (medico == null)
             {
                 return NotFound();
             }
 
-            return View(estudiante);
+            return View(medico);
         }
 
-        // GET: Estudiantes/Create
+        // GET: Medicos/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Estudiantes/Create
+        // POST: Medicos/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ci,nombre,apellidoMaterno,apellidoPaterno,correo,edad,telefono,direccion")] Estudiante estudiante)
+        public async Task<IActionResult> Create([Bind("Id,ci,Nombre,ApellidoMaterno,ApellidoPaterno,Telefono,Correo,Especialidad,Direccion")] Medico medico)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(estudiante);
+                _context.Add(medico);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(estudiante);
+            return View(medico);
         }
 
-        // GET: Estudiantes/Edit/5
+        // GET: Medicos/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace wa_registroestudiantes.Controllers
                 return NotFound();
             }
 
-            var estudiante = await _context.Estudiantes.FindAsync(id);
-            if (estudiante == null)
+            var medico = await _context.Medicos.FindAsync(id);
+            if (medico == null)
             {
                 return NotFound();
             }
-            return View(estudiante);
+            return View(medico);
         }
 
-        // POST: Estudiantes/Edit/5
+        // POST: Medicos/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ci,nombre,apellidoMaterno,apellidoPaterno,correo,edad,telefono,direccion")] Estudiante estudiante)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,ci,Nombre,ApellidoMaterno,ApellidoPaterno,Telefono,Correo,Especialidad,Direccion")] Medico medico)
         {
-            if (id != estudiante.Id)
+            if (id != medico.Id)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace wa_registroestudiantes.Controllers
             {
                 try
                 {
-                    _context.Update(estudiante);
+                    _context.Update(medico);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EstudianteExists(estudiante.Id))
+                    if (!MedicoExists(medico.Id))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace wa_registroestudiantes.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(estudiante);
+            return View(medico);
         }
 
-        // GET: Estudiantes/Delete/5
+        // GET: Medicos/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,34 +124,34 @@ namespace wa_registroestudiantes.Controllers
                 return NotFound();
             }
 
-            var estudiante = await _context.Estudiantes
+            var medico = await _context.Medicos
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (estudiante == null)
-            {   
+            if (medico == null)
+            {
                 return NotFound();
             }
 
-            return View(estudiante);
+            return View(medico);
         }
 
-        // POST: Estudiantes/Delete/5
+        // POST: Medicos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var estudiante = await _context.Estudiantes.FindAsync(id);
-            if (estudiante != null)
+            var medico = await _context.Medicos.FindAsync(id);
+            if (medico != null)
             {
-                _context.Estudiantes.Remove(estudiante);
+                _context.Medicos.Remove(medico);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool EstudianteExists(int id)
+        private bool MedicoExists(int id)
         {
-            return _context.Estudiantes.Any(e => e.Id == id);
+            return _context.Medicos.Any(e => e.Id == id);
         }
     }
 }
